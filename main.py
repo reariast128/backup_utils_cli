@@ -2,32 +2,37 @@ import os
 from os import path
 import argparse
 
-parser = argparse.ArgumentParser(
-    prog="Backup tool.",
-    description="""This module provides some backup utilities like:
-    - Register directory changes.
-    - Do a partial/full copy of a directory.""",
-    epilog="Created by Ricardo Arias. https://github.com/reariast128"
-)
+class Backup:
+    parser = argparse.ArgumentParser(
+        prog="Backup tool",
+        description="""This module provides some backup utilities like:
+        - Register directory changes.
+        - Do a partial/full copy of a directory.""",
+        epilog="Created by Ricardo Arias. https://github.com/reariast128"
+    )
 
-parser.add_argument('-p', '--path', 
-                    default="./",
-                    help="Indicates the path to work with (default: path where the module is in.)")
+    def __init__(self) -> None:
+        self.create_arguments()
+        self.args = self.parser.parse_args()
+        self.path = self.args.path
 
-args = parser.parse_args()
+    def create_arguments(self) -> None:
+        self.parser.add_argument('path', 
+                            default="./",
+                            help="Indicates the path to work with (default: path where the module is in.)")
 
-def main() -> None:
-    path = args.path
-    try:
-        items = os.listdir(path)
+    def main(self) -> None:
+        try:
+            items = os.listdir(self.path)
 
-    except FileNotFoundError as error:
-        print(f"ERROR: {error.strerror}")
-        
-    else:
-        for item in items:
-            print(item)
+        except FileNotFoundError as error:
+            print(f"ERROR: {error.strerror}")
+            
+        else:
+            for item in items:
+                print(item)
 
 if __name__ == "__main__":
-    print(args)
-    main()
+    bcp = Backup()
+    bcp.set_path()
+    bcp.main()
