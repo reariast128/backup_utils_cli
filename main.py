@@ -22,20 +22,6 @@ class Backup:
                             default="./",
                             help="Indicates the path to work with (default: path where the module is in.)")
 
-    def print_items(self) -> None:
-        try:
-            items = os.listdir(self.main_path)
-
-        except:
-            print(f"ERROR")
-            
-        else:
-            files = [file for file in items if path.isfile(file)]
-            directories = [directory for directory in items if path.isdir(directory)]
-
-            print(f"Files: {files}")
-            print(f"Directories: {directories}")
-
     def tree(self) -> tuple:
         tree = [item for item in os.walk(self.main_path)]
         return tree
