@@ -18,9 +18,16 @@ args = parser.parse_args()
 
 def main() -> None:
     path = args.path
-    items = os.listdir(path)
-    for item in items:
-        print(item)
+    try:
+        items = os.listdir(path)
+
+    except FileNotFoundError as error:
+        print(f"ERROR: {error.strerror}")
+        
+    else:
+        for item in items:
+            print(item)
 
 if __name__ == "__main__":
+    print(args)
     main()
